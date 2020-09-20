@@ -1,6 +1,6 @@
 type Order = 'DESC' | 'ASC';
 
-export interface QueryList {
+export interface ListQuery {
   filter: { [key: string]: string };
   range: [number, number];
   sort: [string, Order];

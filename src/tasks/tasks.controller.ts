@@ -15,10 +15,10 @@ import { Task } from './shared/services/models/Task.model';
 import { Observable } from 'rxjs';
 
 // Models
-import { QueryList } from './shared/services/models/QueryList.model';
+import { ListQuery } from '../shared/pipes/models/ListQuery.model';
 
 // Pipes
-import { ParseQueryListPipe } from './shared/pipes/query-list.pipe';
+import { ParseListQueryPipe } from './shared/pipes/list-query.pipe';
 
 @Controller('tasks')
 export class TasksController {
@@ -28,7 +28,7 @@ export class TasksController {
   @Get()
   @HttpCode(200)
   getAllWithQuery(
-    @Query(ParseQueryListPipe) query: QueryList,
+    @Query(ParseListQueryPipe) query: ListQuery,
   ): Observable<Array<Task>> {
     return this.taskService.getAllWithQuery(query);
   }

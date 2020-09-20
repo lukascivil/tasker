@@ -1,9 +1,9 @@
 // Models
-import { QueryList } from '../services/models/QueryList.model';
-import { ParseQueryListPipe } from './query-list.pipe';
+import { ListQuery } from 'src/shared/pipes/models/ListQuery.model';
+import { ParseListQueryPipe } from './list-query.pipe';
 
 describe('QueryListPipe', () => {
-  let validQueryList: QueryList = {
+  let validQueryList: ListQuery = {
     filter: {},
     range: [0, 9],
     sort: ['id', 'ASC'],
@@ -15,11 +15,11 @@ describe('QueryListPipe', () => {
   };
 
   it('should be defined', () => {
-    expect(new ParseQueryListPipe()).toBeDefined();
+    expect(new ParseListQueryPipe()).toBeDefined();
   });
 
-  it('should return valid QueryList with a valid query', () => {
-    const parseQueryListPipe = new ParseQueryListPipe();
+  it('should return valid ListQuery with a valid query', () => {
+    const parseQueryListPipe = new ParseListQueryPipe();
     const transformedQueryList = parseQueryListPipe.transform(
       validQueryList,
       undefined,
@@ -30,8 +30,8 @@ describe('QueryListPipe', () => {
     expect(transformedQueryList.sort.length).toEqual(2);
   });
 
-  it('should return valid QueryList with a invalid query', () => {
-    const parseQueryListPipe = new ParseQueryListPipe();
+  it('should return valid ListQuery with a invalid query', () => {
+    const parseQueryListPipe = new ParseListQueryPipe();
     const transformedQueryList = parseQueryListPipe.transform(
       invalidQueryList,
       undefined,

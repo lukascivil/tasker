@@ -1,12 +1,12 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 
 // Models
-import { QueryList } from '../services/models/QueryList.model';
+import { ListQuery } from 'src/shared/pipes/models/ListQuery.model';
 
 @Injectable()
-export class ParseQueryListPipe implements PipeTransform {
+export class ParseListQueryPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
-    const defaultQuery: QueryList = {
+    const defaultQuery: ListQuery = {
       filter: {},
       range: [0, 9],
       sort: ['id', 'ASC'],
