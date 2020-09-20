@@ -2,13 +2,13 @@
 import { ListQuery } from 'src/shared/pipes/models/ListQuery.model';
 import { ParseListQueryPipe } from './list-query.pipe';
 
-describe('QueryListPipe', () => {
-  let validQueryList: ListQuery = {
+describe('ListQueryPipe', () => {
+  const validListQuery: ListQuery = {
     filter: {},
     range: [0, 9],
     sort: ['id', 'ASC'],
   };
-  let invalidQueryList: any = {
+  const invalidListQuery: any = {
     filter: {},
     range: [9],
     sort: [],
@@ -21,7 +21,7 @@ describe('QueryListPipe', () => {
   it('should return valid ListQuery with a valid query', () => {
     const parseQueryListPipe = new ParseListQueryPipe();
     const transformedQueryList = parseQueryListPipe.transform(
-      validQueryList,
+      validListQuery,
       undefined,
     );
 
@@ -33,7 +33,7 @@ describe('QueryListPipe', () => {
   it('should return valid ListQuery with a invalid query', () => {
     const parseQueryListPipe = new ParseListQueryPipe();
     const transformedQueryList = parseQueryListPipe.transform(
-      invalidQueryList,
+      invalidListQuery,
       undefined,
     );
 
