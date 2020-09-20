@@ -1,6 +1,11 @@
+// Packages
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { from, Observable, of } from 'rxjs';
+
+// Models
+import { QueryList } from './models/QueryList.model';
 import { Task } from './models/Task.model';
+
 // https://www.youtube.com/watch?v=wuK1MvSpcAc
 @Injectable()
 export class TaskService {
@@ -19,6 +24,12 @@ export class TaskService {
 
   getAll(): Observable<Array<Task>> {
     return of(this.tasks);
+  }
+
+  getAllWithQuery(query: QueryList): Observable<Array<Task>> {
+    const selectedTasks = this.tasks.slice(query.range[0], query.range[1]);
+
+    return of(selectedTasks);
   }
 
   getById(id: number): Observable<Task> {

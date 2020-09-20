@@ -8,14 +8,30 @@ import {
   Post,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { TaskService } from './shared/services/task.service';
 import { Task } from './shared/services/models/Task.model';
 import { Observable } from 'rxjs';
 
+// Models
+import { QueryList } from './shared/services/models/QueryList.model';
+
+// Pipes
+import { ParseQueryListPipe } from './shared/pipes/query-list.pipe';
+
 @Controller('tasks')
 export class TasksController {
   constructor(private taskService: TaskService) {}
+
+  // GetList with filter range sort pattern
+  @Get()
+  @HttpCode(200)
+  getAllWithQuery(
+    @Query(ParseQueryListPipe) query: QueryList,
+  ): Observable<Array<Task>> {
+    return this.taskService.getAllWithQuery(query);
+  }
 
   // GetList
   @Get()
