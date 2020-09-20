@@ -3,10 +3,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { from, Observable, of } from 'rxjs';
 
 // Models
-import { Task } from './models/Task.model';
-import { ListQuery } from 'src/shared/pipes/models/ListQuery.model';
+import { ListQuery } from 'src/shared/models/ListQuery.model';
+import { Task } from '../models/Task.model';
 
-// https://www.youtube.com/watch?v=wuK1MvSpcAc
 @Injectable()
 export class TaskService {
   tasks: Array<Task> = [

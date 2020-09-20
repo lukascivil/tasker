@@ -1,7 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TaskService } from './task.service';
 import { take } from 'rxjs/operators';
-import { Task } from './models/Task.model';
+
+// Models
+import { Task } from '../models/Task.model';
 
 describe('TaskService', () => {
   let taskService: TaskService;

@@ -1,7 +1,7 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 
 // Models
-import { ListQuery } from 'src/shared/pipes/models/ListQuery.model';
+import { ListQuery } from '../models/ListQuery.model';
 
 @Injectable()
 export class ParseListQueryPipe implements PipeTransform {

@@ -1,6 +1,6 @@
 // Models
-import { ListQuery } from 'src/shared/pipes/models/ListQuery.model';
-import { ParseListQueryPipe } from './list-query.pipe';
+import { ParseListQueryPipe } from './parse-list-query.pipe';
+import { ListQuery } from '../models/ListQuery.model';
 
 describe('ListQueryPipe', () => {
   const validListQuery: ListQuery = {

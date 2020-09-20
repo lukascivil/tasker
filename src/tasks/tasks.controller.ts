@@ -11,14 +11,14 @@ import {
   Query,
 } from '@nestjs/common';
 import { TaskService } from './shared/services/task.service';
-import { Task } from './shared/services/models/Task.model';
 import { Observable } from 'rxjs';
 
 // Models
-import { ListQuery } from '../shared/pipes/models/ListQuery.model';
+import { Task } from './shared/models/Task.model';
+import { ListQuery } from 'src/shared/models/ListQuery.model';
 
 // Pipes
-import { ParseListQueryPipe } from './shared/pipes/list-query.pipe';
+import { ParseListQueryPipe } from 'src/shared/pipes/parse-list-query.pipe';
 
 @Controller('tasks')
 export class TasksController {
