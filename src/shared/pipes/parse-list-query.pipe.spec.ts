@@ -1,5 +1,7 @@
-// Models
+// Packages
 import { ParseListQueryPipe } from './parse-list-query.pipe';
+
+// Models
 import { ListQuery } from '../models/ListQuery.model';
 
 describe('ListQueryPipe', () => {

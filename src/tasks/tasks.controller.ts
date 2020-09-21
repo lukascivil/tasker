@@ -18,7 +18,7 @@ import { Task } from './shared/models/Task.model';
 import { ListQuery } from 'src/shared/models/ListQuery.model';
 
 // Pipes
-import { ParseListQueryPipe } from 'src/shared/pipes/parse-list-query.pipe';
+import { ParseListQueryPipe } from '../shared/pipes/parse-list-query.pipe';
 
 @Controller('tasks')
 export class TasksController {
