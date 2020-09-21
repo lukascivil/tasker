@@ -36,3 +36,10 @@ $ yarn test
 # e2e tests
 $ yarn test:e2e
 ```
+
+## Documentation
+
+```bash
+# Swagger Docs
+open http://localhost:3000/api
+```
