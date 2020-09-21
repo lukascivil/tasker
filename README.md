@@ -5,6 +5,7 @@
 <p align="center">Tasker, uma aplicacao de cadastro de tarefas </p>
 
 ![badge](https://action-badges.now.sh/lukascivil/tasker)
+[![codecov](https://codecov.io/gh/lukascivil/tasker/branch/master/graph/badge.svg)](https://codecov.io/gh/lukascivil/tasker)
 
 ## Description
 
