@@ -1,9 +1,10 @@
 // Packages
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { from, Observable, of } from 'rxjs';
+import { GetManyQuery } from 'src/shared/models/GetManyQuery.model';
 
 // Models
-import { ListQuery } from 'src/shared/models/ListQuery.model';
+import { GetListQuery } from 'src/shared/models/GetListQuery.model';
 import { Task } from '../models/Task.model';
 
 @Injectable()
@@ -25,13 +26,36 @@ export class TaskService {
     return of(this.tasks);
   }
 
-  getAllWithQuery(query: ListQuery): Observable<Array<Task>> {
-    const selectedTasks = this.tasks.slice(query.range[0], query.range[1]);
+  getList(
+    getListQuery: GetListQuery,
+  ): Observable<{ data: Array<Task>; contentRange: [number, number, number] }> {
+    const selectedTasks = this.tasks.slice(
+      getListQuery.range[0],
+      getListQuery.range[1],
+    );
+    const contentRange: [number, number, number] = [
+      getListQuery.range[0],
+      getListQuery.range[1],
+      this.tasks.length,
+    ];
 
-    return of(selectedTasks);
+    return of({ data: selectedTasks, contentRange });
   }
 
-  getById(id: number): Observable<Task> {
+  getMany(getListQuery: GetListQuery): Observable<{ data: Array<Task> }> {
+    const ids = getListQuery.filter.id as Array<number>;
+    console.log({ ids });
+
+    const selectedTasks = this.tasks.filter(el => {
+      return ids.some(id => id === el?.id);
+    });
+
+    console.log({ getListQuery, selectedTasks });
+
+    return of({ data: selectedTasks });
+  }
+
+  getOne(id: number): Observable<Task> {
     return of(this.tasks.find(el => el.id === id));
   }
 

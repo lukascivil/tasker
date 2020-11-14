@@ -2,10 +2,10 @@
 import { ParseListQueryPipe } from './parse-list-query.pipe';
 
 // Models
-import { ListQuery } from '../models/ListQuery.model';
+import { GetListQuery } from '../models/GetListQuery.model';
 
 describe('ListQueryPipe', () => {
-  const validListQuery: ListQuery = {
+  const validListQuery: GetListQuery = {
     filter: {},
     range: [0, 9],
     sort: ['id', 'ASC'],
@@ -27,9 +27,9 @@ describe('ListQueryPipe', () => {
       undefined,
     );
 
-    expect(transformedQueryList.filter instanceof Object).toBeTruthy();
-    expect(transformedQueryList.range.length).toEqual(2);
-    expect(transformedQueryList.sort.length).toEqual(2);
+    expect(transformedQueryList.query.filter instanceof Object).toBeTruthy();
+    expect(transformedQueryList.query.range.length).toEqual(2);
+    expect(transformedQueryList.query.sort.length).toEqual(2);
   });
 
   it('should return valid ListQuery with a invalid query', () => {
@@ -39,8 +39,8 @@ describe('ListQueryPipe', () => {
       undefined,
     );
 
-    expect(transformedQueryList.filter instanceof Object).toBeTruthy();
-    expect(transformedQueryList.range.length).toEqual(2);
-    expect(transformedQueryList.sort.length).toEqual(2);
+    expect(transformedQueryList.query.filter instanceof Object).toBeTruthy();
+    expect(transformedQueryList.query.range.length).toEqual(2);
+    expect(transformedQueryList.query.sort.length).toEqual(2);
   });
 });

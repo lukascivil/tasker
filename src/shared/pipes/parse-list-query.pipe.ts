@@ -1,16 +1,20 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 
 // Models
-import { ListQuery } from '../models/ListQuery.model';
+import { GetListQuery } from '../models/GetListQuery.model';
 
 @Injectable()
 export class ParseListQueryPipe implements PipeTransform {
-  transform(value: any, metadata: ArgumentMetadata) {
-    const defaultQuery: ListQuery = {
-      filter: {},
-      range: [0, 9],
-      sort: ['id', 'ASC'],
+  transform(
+    value: any,
+    metadata: ArgumentMetadata,
+  ): { query: GetListQuery; listType: 'getMany' | 'getList' } {
+    const defaultQuery: GetListQuery = {
+      filter: undefined,
+      range: undefined,
+      sort: undefined,
     };
+    let listType = undefined;
 
     if (value.filter instanceof Object) {
       defaultQuery.filter = value.filter;
@@ -24,6 +28,21 @@ export class ParseListQueryPipe implements PipeTransform {
       defaultQuery.sort = value.sort;
     }
 
-    return defaultQuery;
+    if (
+      defaultQuery.filter &&
+      defaultQuery.filter.hasOwnProperty('id') &&
+      value.filter.id instanceof Array
+    ) {
+      listType = 'getMany';
+    }
+
+    if (defaultQuery.filter && defaultQuery.range && defaultQuery.sort) {
+      listType = 'getList';
+    }
+
+    console.log({ defaultQuery, listType, value });
+    // console.log(metadata);
+
+    return { query: defaultQuery, listType };
   }
 }
