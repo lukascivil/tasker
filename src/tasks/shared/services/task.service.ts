@@ -15,6 +15,8 @@ import { GetListResult } from 'src/shared/models/get-list-result.model';
 import { GetManyResult } from 'src/shared/models/get-many-result.model';
 import { CreateResult } from 'src/shared/models/create-result.model';
 import { UpdateResult } from 'src/shared/models/update-result.model';
+import { UpdateTaskDto } from '../dto/update-task.dto';
+import { CreateTaskDto } from '../dto/create-task.dto';
 
 @Injectable()
 export class TaskService {
@@ -64,7 +66,7 @@ export class TaskService {
     );
   }
 
-  create(task: TaskEntity): Observable<CreateResult<TaskEntity>> {
+  create(task: CreateTaskDto): Observable<CreateResult<TaskEntity>> {
     const newTask = new TaskEntity();
 
     newTask.description = task.description;
@@ -79,8 +81,10 @@ export class TaskService {
     );
   }
 
-  update(task: TaskEntity): Observable<UpdateResult<TaskEntity>> {
-    return from(this.taskRepository.findOne(task.id))
+  update(id, task: UpdateTaskDto): Observable<UpdateResult<TaskEntity>> {
+    const query: FindOneOptions<TaskEntity> = { where: { id } };
+
+    return from(this.taskRepository.findOne(query))
       .pipe(
         map(taskToUpdate => {
           taskToUpdate.completed = task.completed;

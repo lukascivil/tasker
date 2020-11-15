@@ -16,17 +16,38 @@ export class TaskEntity {
   })
   id?: number;
 
-  @Column({ default: '' })
+  @Column({ type: 'longtext', default: '' })
   @ApiProperty({
-    example: 'Working on a project',
+    example: 'Working on a project with react-admin and nestjs',
     description: 'The Task description'
   })
   description: string;
 
-  @Column({ default: false })
+  @Column({ type: 'boolean', default: false })
   @ApiProperty({
     example: false,
-    description: 'Task completed indicator'
+    description: 'Is my Task completed'
   })
   completed: boolean;
+
+  @Column({ type: 'text', default: '' })
+  @ApiProperty({
+    example: 'I have to study react-admin and nestjs',
+    description: 'Task title'
+  })
+  title: string;
+
+  @Column({ type: 'datetime', default: () => 'NOW()' })
+  @ApiProperty({
+    example: 'YYYY-MM-DD HH-MM-SS',
+    description: 'when this task was created'
+  })
+  created_at: string;
+
+  @Column({ type: 'datetime', default: () => 'NOW()' })
+  @ApiProperty({
+    example: 'YYYY-MM-DD HH-MM-SS',
+    description: 'when this task was updated'
+  })
+  updated_at: string;
 }

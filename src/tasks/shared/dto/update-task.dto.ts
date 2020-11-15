@@ -11,6 +11,12 @@ export class UpdateTaskDto {
     example: 'Working on a project',
     description: 'The Task description'
   })
+  title: string;
+
+  @ApiProperty({
+    example: 'Working on a project',
+    description: 'The Task description'
+  })
   description: string;
 
   @ApiProperty({
