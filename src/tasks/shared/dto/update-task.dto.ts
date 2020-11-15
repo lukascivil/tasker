@@ -1,21 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class Task {
+export class UpdateTaskDto {
   @ApiProperty({
     example: 10,
-    description: 'Record Id',
+    description: 'Record Id'
   })
   id?: number;
 
   @ApiProperty({
     example: 'Working on a project',
-    description: 'The Task description',
+    description: 'The Task description'
   })
   description: string;
 
   @ApiProperty({
     example: false,
-    description: 'Task completed indicator',
+    description: 'Task completed indicator'
   })
   completed: boolean;
 }

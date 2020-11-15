@@ -1,12 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  ArrayMinSize,
-  ArrayMaxSize,
-  IsObject,
-  Validate,
-  IsOptional,
-  IsNotEmpty,
-} from 'class-validator';
+import { ArrayMinSize, ArrayMaxSize, IsObject, Validate, IsOptional, IsNotEmpty } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { SortValidator } from '../validators/sort.validator';
 import { FilterValidator } from '../validators/filter.validator';
@@ -28,7 +21,7 @@ export class GetListQuery {
   // })
   @ApiProperty({
     type: Object,
-    example: '{createdAt: "..."}',
+    example: '{createdAt: "..."}'
   })
   @IsObject()
   @IsNotEmpty()
@@ -40,7 +33,7 @@ export class GetListQuery {
 
   @ApiProperty({
     type: Array,
-    example: '[0, 9]',
+    example: '[0, 9]'
   })
   @IsOptional()
   @ArrayMinSize(2)
@@ -52,7 +45,7 @@ export class GetListQuery {
 
   @ApiProperty({
     type: Array,
-    example: '[createdAt, "ASC"]',
+    example: '[createdAt, "ASC"]'
   })
   @IsOptional()
   @Transform(value => {

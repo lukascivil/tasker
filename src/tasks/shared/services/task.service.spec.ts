@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TaskService } from './task.service';
 import { take } from 'rxjs/operators';
+import { CreateTaskDto } from '../dto/create-task.dto';
 
 // Models
-import { Task } from '../models/Task.model';
 
 describe('TaskService', () => {
   let taskService: TaskService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TaskService],
+      providers: [TaskService]
     }).compile();
 
     taskService = module.get<TaskService>(TaskService);
@@ -35,7 +35,7 @@ describe('TaskService', () => {
     const selectedId = 1;
 
     taskService
-      .getById(selectedId)
+      .getOne(selectedId)
       .pipe(take(1))
       .subscribe(task => {
         expect(task.id).toEqual(selectedId);
@@ -43,9 +43,9 @@ describe('TaskService', () => {
   });
 
   it('should create new task and return the same', () => {
-    const newTask: Task = {
+    const newTask: CreateTaskDto = {
       description: 'new task was created, and i have to study more',
-      completed: false,
+      completed: false
     };
 
     taskService
@@ -60,7 +60,7 @@ describe('TaskService', () => {
     const selectedId = 3;
 
     taskService
-      .deleteBydId(selectedId)
+      .delete(selectedId)
       .pipe(take(1))
       .subscribe(result => {
         expect(result).toEqual(undefined);
