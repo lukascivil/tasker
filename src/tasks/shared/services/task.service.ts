@@ -3,11 +3,12 @@ import { Injectable } from '@nestjs/common';
 import { from, Observable } from 'rxjs';
 
 // Models
-import { GetListQuery } from 'src/shared/models/GetListQuery.model';
+import { GetListQuery } from 'src/shared/models/get-list-query.model';
 import { TaskEntity } from '../entity/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, FindManyOptions, Repository } from 'typeorm';
+import { DeleteResult, FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { map, switchMap } from 'rxjs/operators';
+import { GetOneResult } from 'src/shared/models/get-one-result.model';
 
 @Injectable()
 export class TaskService {
@@ -16,11 +17,9 @@ export class TaskService {
     private readonly taskRepository: Repository<TaskEntity>
   ) {}
 
-  getAll(): Observable<Array<TaskEntity>> {
-    return from(this.taskRepository.find());
-  }
-
-  getList(getListQuery: GetListQuery): Observable<{ data: Array<TaskEntity>; contentRange: [number, number, number] }> {
+  getList(
+    getListQuery: GetListQuery
+  ): Observable<{ data: Array<TaskEntity>; contentRange: [string, number, number, number] }> {
     const query: FindManyOptions<TaskEntity> = {
       where: { id: getListQuery.filter.id },
       take: getListQuery.range[1] - getListQuery.range[0],
@@ -31,7 +30,7 @@ export class TaskService {
       map(el => {
         return {
           data: el[0].slice(getListQuery.range[0], getListQuery.range[1]),
-          contentRange: [getListQuery.range[0], getListQuery.range[1], el[1]]
+          contentRange: ['task', getListQuery.range[0], getListQuery.range[1], el[1]]
         };
       })
     );
@@ -49,10 +48,16 @@ export class TaskService {
     );
   }
 
-  getOne(id: number): Observable<TaskEntity> {
-    const savedTask = this.taskRepository.findOne(id);
+  getOne(id: number): Observable<GetOneResult<TaskEntity>> {
+    const query: FindOneOptions<TaskEntity> = { where: { id } };
 
-    return from(savedTask);
+    return from(this.taskRepository.findOne(query)).pipe(
+      map(savedTask => {
+        return {
+          data: savedTask
+        };
+      })
+    );
   }
 
   create(task: TaskEntity): Observable<TaskEntity> {

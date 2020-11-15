@@ -1,7 +1,13 @@
+// Packages
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity('task')
+// Models
+import { AppResource } from 'src/shared/models/app-resource.model';
+
+const entityName: AppResource = 'task';
+
+@Entity(entityName)
 export class TaskEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty({

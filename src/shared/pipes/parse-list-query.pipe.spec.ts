@@ -2,18 +2,18 @@
 import { ParseListQueryPipe } from './parse-list-query.pipe';
 
 // Models
-import { GetListQuery } from '../models/GetListQuery.model';
+import { GetListQuery } from '../models/get-list-query.model';
 
 describe('ListQueryPipe', () => {
   const validListQuery: GetListQuery = {
     filter: {},
     range: [0, 9],
-    sort: ['id', 'ASC'],
+    sort: ['id', 'ASC']
   };
   const invalidListQuery: any = {
     filter: {},
     range: [9],
-    sort: [],
+    sort: []
   };
 
   it('should be defined', () => {
@@ -22,10 +22,7 @@ describe('ListQueryPipe', () => {
 
   it('should return valid ListQuery with a valid query', () => {
     const parseQueryListPipe = new ParseListQueryPipe();
-    const transformedQueryList = parseQueryListPipe.transform(
-      validListQuery,
-      undefined,
-    );
+    const transformedQueryList = parseQueryListPipe.transform(validListQuery, undefined);
 
     expect(transformedQueryList.query.filter instanceof Object).toBeTruthy();
     expect(transformedQueryList.query.range.length).toEqual(2);
@@ -34,10 +31,7 @@ describe('ListQueryPipe', () => {
 
   it('should return valid ListQuery with a invalid query', () => {
     const parseQueryListPipe = new ParseListQueryPipe();
-    const transformedQueryList = parseQueryListPipe.transform(
-      invalidListQuery,
-      undefined,
-    );
+    const transformedQueryList = parseQueryListPipe.transform(invalidListQuery, undefined);
 
     expect(transformedQueryList.query.filter instanceof Object).toBeTruthy();
     expect(transformedQueryList.query.range.length).toEqual(2);

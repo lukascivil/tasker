@@ -7,18 +7,6 @@ import { FilterValidator } from '../validators/filter.validator';
 type Order = 'DESC' | 'ASC';
 
 export class GetListQuery {
-  // @IsObject()
-  // @IsNotEmpty()
-  // @ValidateIf(el => {
-  //   console.log('el', el);
-
-  //   return true;
-  // })
-  // @Validate(o => {
-  //   console.log({ o });
-
-  //   return !isArray(o.filter.id) ? o.range && o.sort : true;
-  // })
   @ApiProperty({
     type: Object,
     example: '{createdAt: "..."}'

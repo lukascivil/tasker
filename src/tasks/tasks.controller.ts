@@ -20,7 +20,7 @@ import { Observable, of } from 'rxjs';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 
 // Models
-import { GetListQuery } from 'src/shared/models/GetListQuery.model';
+import { GetListQuery } from 'src/shared/models/get-list-query.model';
 
 // Pipes
 import { ListPaginationInterceptor } from 'src/shared/interceptors/list-pagination.interceptor';
@@ -29,13 +29,16 @@ import { CreateTaskDto } from './shared/dto/create-task.dto';
 import { TaskEntity } from './shared/entity/task.entity';
 import { DeleteResult } from 'typeorm';
 import { UpdateTaskDto } from './shared/dto/update-task.dto';
+import { GetOneResult } from 'src/shared/models/get-one-result.model';
+import { GetListResult } from 'src/shared/models/get-list-result.model';
+import { GetManyResult } from 'src/shared/models/get-many-result.model';
 
 @Controller('tasks')
+@UseInterceptors(ListPaginationInterceptor)
 export class TasksController {
   constructor(private taskService: TaskService) {}
 
   // GetList and GetMany
-  @UseInterceptors(ListPaginationInterceptor)
   @Get()
   @HttpCode(200)
   @ApiQuery({ type: '{key: string}', name: 'filter' })
@@ -53,15 +56,12 @@ export class TasksController {
   getAllWithQuery(
     @Query()
     getListQuery: GetListQuery
-  ): Observable<{
-    data: Array<TaskEntity>;
-    contentRange?: [number, number, number];
-  }> {
+  ): Observable<GetListResult<TaskEntity> | GetManyResult<TaskEntity>> {
     const isInvalidQueryWithFilterId =
       getListQuery.filter.id && !isArray(getListQuery.filter.id) && !getListQuery.range && !getListQuery.sort;
 
     console.log(1);
-    console.log(getListQuery);
+    // console.log(getListQuery);
 
     if (isInvalidQueryWithFilterId) {
       throw new HttpException('cafe', HttpStatus.BAD_REQUEST);
@@ -73,12 +73,12 @@ export class TasksController {
       return this.taskService.getMany(getListQuery);
     }
 
-    return of({ data: [], contentRange: [0, 9, 10] });
+    return of({ data: [], contentRange: ['error', 0, 9, 0] });
   }
   // GetOne
   @Get(':id')
   @HttpCode(200)
-  getById(@Param('id', ParseIntPipe) id: number): Observable<TaskEntity> {
+  getById(@Param('id', ParseIntPipe) id: number): Observable<GetOneResult<TaskEntity>> {
     return this.taskService.getOne(id);
   }
 
