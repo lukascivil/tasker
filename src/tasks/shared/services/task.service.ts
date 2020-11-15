@@ -1,14 +1,16 @@
 // Packages
 import { Injectable } from '@nestjs/common';
 import { from, Observable } from 'rxjs';
-
-// Models
-import { GetListQuery } from 'src/shared/models/get-list-query.model';
-import { TaskEntity } from '../entity/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { map, switchMap } from 'rxjs/operators';
+
+// Models
+import { GetListQuery } from 'src/shared/models/get-list-query.model';
 import { GetOneResult } from 'src/shared/models/get-one-result.model';
+
+// Entities
+import { TaskEntity } from '../entity/task.entity';
 
 @Injectable()
 export class TaskService {

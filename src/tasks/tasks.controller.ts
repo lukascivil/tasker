@@ -1,3 +1,4 @@
+// Packages
 import {
   Controller,
   Get,
@@ -18,20 +19,24 @@ import {
 import { TaskService } from './shared/services/task.service';
 import { Observable, of } from 'rxjs';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { isArray } from 'class-validator';
+import { DeleteResult } from 'typeorm';
 
 // Models
 import { GetListQuery } from 'src/shared/models/get-list-query.model';
-
-// Pipes
-import { ListPaginationInterceptor } from 'src/shared/interceptors/list-pagination.interceptor';
-import { isArray } from 'class-validator';
-import { CreateTaskDto } from './shared/dto/create-task.dto';
-import { TaskEntity } from './shared/entity/task.entity';
-import { DeleteResult } from 'typeorm';
-import { UpdateTaskDto } from './shared/dto/update-task.dto';
 import { GetOneResult } from 'src/shared/models/get-one-result.model';
 import { GetListResult } from 'src/shared/models/get-list-result.model';
 import { GetManyResult } from 'src/shared/models/get-many-result.model';
+
+// Entity
+import { TaskEntity } from './shared/entity/task.entity';
+
+// Dtos
+import { CreateTaskDto } from './shared/dto/create-task.dto';
+import { UpdateTaskDto } from './shared/dto/update-task.dto';
+
+// Interceptors
+import { ListPaginationInterceptor } from 'src/shared/interceptors/list-pagination.interceptor';
 
 @Controller('tasks')
 @UseInterceptors(ListPaginationInterceptor)
@@ -59,9 +64,6 @@ export class TasksController {
   ): Observable<GetListResult<TaskEntity> | GetManyResult<TaskEntity>> {
     const isInvalidQueryWithFilterId =
       getListQuery.filter.id && !isArray(getListQuery.filter.id) && !getListQuery.range && !getListQuery.sort;
-
-    console.log(1);
-    // console.log(getListQuery);
 
     if (isInvalidQueryWithFilterId) {
       throw new HttpException('cafe', HttpStatus.BAD_REQUEST);

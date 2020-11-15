@@ -1,8 +1,5 @@
-import {
-  ValidationArguments,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-} from 'class-validator';
+// Packages
+import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 
 type Order = 'DESC' | 'ASC';
 
