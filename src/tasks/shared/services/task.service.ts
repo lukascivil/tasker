@@ -36,7 +36,7 @@ export class TaskService {
       map(el => {
         return {
           data: el[0].slice(getListQuery.range[0], getListQuery.range[1]),
-          contentRange: ['task', getListQuery.range[0], getListQuery.range[1], el[1]]
+          contentRange: ['tasks', getListQuery.range[0], getListQuery.range[1], el[1]]
         };
       })
     );
