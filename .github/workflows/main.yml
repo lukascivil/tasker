@@ -28,6 +28,9 @@ jobs:
       - name: Run lint
         run: yarn lint
 
+      - name: Run semantic-check
+        run: yarn semantic-check
+
       - name: Run test
         run: yarn test:cov
 
