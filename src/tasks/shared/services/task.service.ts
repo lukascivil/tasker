@@ -29,7 +29,8 @@ export class TaskService {
     const query: FindManyOptions<TaskEntity> = {
       where: { ...getListQuery.filter },
       take: getListQuery.range[1] - getListQuery.range[0],
-      skip: getListQuery.range[0]
+      skip: getListQuery.range[0],
+      order: { [getListQuery.sort[0]]: getListQuery.sort[1] }
     };
 
     return from(this.taskRepository.findAndCount(query)).pipe(
