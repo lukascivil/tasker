@@ -43,3 +43,7 @@ $ yarn test:e2e
 # Swagger Docs
 open http://localhost:3000/api
 ```
+
+## Running the client
+
+Read the docs of Tasker client here: https://github.com/lukascivil/our-admin
