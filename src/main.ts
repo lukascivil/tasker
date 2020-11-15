@@ -12,8 +12,13 @@ async function bootstrap() {
     .addTag('task')
     .build();
   const document = SwaggerModule.createDocument(app, options);
+  const cors = {
+    origin: '*',
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS'
+  };
 
   SwaggerModule.setup('api', app, document);
+  app.enableCors(cors);
   await app.listen(3000);
 }
 bootstrap();
