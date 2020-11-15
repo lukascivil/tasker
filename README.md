@@ -13,8 +13,28 @@ Tasker is an application for registering tasks. The server was created using Nes
 
 ## Installation
 
+### Installation
+
 ```bash
 $ yarn
+```
+
+### DataBase
+
+<strong>On windows</strong> you can download [xampp](https://www.apachefriends.org/) to up MySQL DB, its free application.
+![image](https://user-images.githubusercontent.com/7409802/99200349-8164d480-2783-11eb-9815-426f1af7f73e.png)
+
+<strong>On Linux</strong> you can install MySQL using apt
+
+```bash
+$ sudo apt update
+$ sudo apt install mysql-server
+```
+
+### Running the DB
+
+```bash
+sudo systemctl start mysql
 ```
 
 ## Running the app
