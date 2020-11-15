@@ -86,11 +86,12 @@ export class TaskService {
 
     return from(this.taskRepository.findOne(query))
       .pipe(
-        map(taskToUpdate => {
-          taskToUpdate.completed = task.completed;
-          taskToUpdate.description = task.description;
+        map(savedTask => {
+          savedTask.completed = task.completed || savedTask.completed;
+          savedTask.description = task.description || savedTask.description;
+          savedTask.title = task.title || savedTask.title;
 
-          return taskToUpdate;
+          return savedTask;
         }),
         switchMap(taskToUpdate => this.taskRepository.save(taskToUpdate))
       )

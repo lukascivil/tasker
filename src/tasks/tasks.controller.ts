@@ -89,6 +89,7 @@ export class TasksController {
   // Create
   @Post()
   @HttpCode(200)
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
   create(@Body() task: CreateTaskDto): Observable<CreateResult<TaskEntity>> {
     return this.taskService.create(task);
   }
@@ -96,6 +97,7 @@ export class TasksController {
   // Update
   @Put(':id')
   @HttpCode(200)
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
   update(@Param('id', ParseIntPipe) id: number, @Body() task: UpdateTaskDto): Observable<UpdateResult<TaskEntity>> {
     return this.taskService.update(id, task);
   }
