@@ -11,6 +11,10 @@ import { GetOneResult } from 'src/shared/models/get-one-result.model';
 
 // Entities
 import { TaskEntity } from '../entity/task.entity';
+import { GetListResult } from 'src/shared/models/get-list-result.model';
+import { GetManyResult } from 'src/shared/models/get-many-result.model';
+import { CreateResult } from 'src/shared/models/create-result.model';
+import { UpdateResult } from 'src/shared/models/update-result.model';
 
 @Injectable()
 export class TaskService {
@@ -19,9 +23,7 @@ export class TaskService {
     private readonly taskRepository: Repository<TaskEntity>
   ) {}
 
-  getList(
-    getListQuery: GetListQuery
-  ): Observable<{ data: Array<TaskEntity>; contentRange: [string, number, number, number] }> {
+  getList(getListQuery: GetListQuery): Observable<GetListResult<TaskEntity>> {
     const query: FindManyOptions<TaskEntity> = {
       where: { id: getListQuery.filter.id },
       take: getListQuery.range[1] - getListQuery.range[0],
@@ -38,7 +40,7 @@ export class TaskService {
     );
   }
 
-  getMany(getListQuery: GetListQuery): Observable<{ data: Array<TaskEntity> }> {
+  getMany(getListQuery: GetListQuery): Observable<GetManyResult<TaskEntity>> {
     const query: FindManyOptions<TaskEntity> = { where: { id: getListQuery.filter.id } };
 
     return from(this.taskRepository.find(query)).pipe(
@@ -62,17 +64,22 @@ export class TaskService {
     );
   }
 
-  create(task: TaskEntity): Observable<TaskEntity> {
+  create(task: TaskEntity): Observable<CreateResult<TaskEntity>> {
     const newTask = new TaskEntity();
+
     newTask.description = task.description;
     newTask.completed = task.completed;
 
-    const savedTask = this.taskRepository.save(newTask);
-
-    return from(savedTask);
+    return from(this.taskRepository.save(newTask)).pipe(
+      map(savedTask => {
+        return {
+          data: savedTask
+        };
+      })
+    );
   }
 
-  update(task: TaskEntity): Observable<TaskEntity> {
+  update(task: TaskEntity): Observable<UpdateResult<TaskEntity>> {
     return from(this.taskRepository.findOne(task.id))
       .pipe(
         map(taskToUpdate => {
@@ -83,7 +90,7 @@ export class TaskService {
         }),
         switchMap(taskToUpdate => this.taskRepository.save(taskToUpdate))
       )
-      .pipe(from);
+      .pipe(map(savedTask => ({ data: savedTask })));
   }
 
   delete(id: number): Observable<DeleteResult> {

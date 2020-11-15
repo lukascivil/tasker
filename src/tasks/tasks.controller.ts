@@ -37,6 +37,8 @@ import { UpdateTaskDto } from './shared/dto/update-task.dto';
 
 // Interceptors
 import { ListPaginationInterceptor } from 'src/shared/interceptors/list-pagination.interceptor';
+import { CreateResult } from 'src/shared/models/create-result.model';
+import { UpdateResult } from 'src/shared/models/update-result.model';
 
 @Controller('tasks')
 @UseInterceptors(ListPaginationInterceptor)
@@ -87,14 +89,14 @@ export class TasksController {
   // Create
   @Post()
   @HttpCode(200)
-  create(@Body() task: CreateTaskDto): Observable<TaskEntity> {
+  create(@Body() task: CreateTaskDto): Observable<CreateResult<TaskEntity>> {
     return this.taskService.create(task);
   }
 
   // Update
   @Put()
   @HttpCode(200)
-  update(@Body() task: UpdateTaskDto): Observable<TaskEntity> {
+  update(@Body() task: UpdateTaskDto): Observable<UpdateResult<TaskEntity>> {
     return this.taskService.update(task);
   }
 
