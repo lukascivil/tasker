@@ -28,10 +28,10 @@ export class ListPaginationInterceptor implements NestInterceptor<Data, Response
         const start = getListResult.contentRange[1];
         const end = getListResult.contentRange[2];
         const total = getListResult.contentRange[3];
-        const contentRange = `${resource} - ${start}-${end}/${total}`;
+        const contentRange = `${resource} ${start}-${end}/${total}`;
 
-        request.res.header('Access-Control-Allow-Headers', 'content-range');
-        request.res.header('content-range', contentRange);
+        request.res.header('Access-Control-Expose-Headers', 'Content-Range');
+        request.res.header('Content-Range', contentRange);
 
         return data.data as Array<TaskEntity>;
       })
