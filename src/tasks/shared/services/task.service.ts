@@ -69,6 +69,7 @@ export class TaskService {
   create(task: CreateTaskDto): Observable<CreateResult<TaskEntity>> {
     const newTask = new TaskEntity();
 
+    newTask.title = task.title;
     newTask.description = task.description;
     newTask.completed = task.completed;
 
@@ -87,9 +88,9 @@ export class TaskService {
     return from(this.taskRepository.findOne(query))
       .pipe(
         map(savedTask => {
-          savedTask.completed = task.completed || savedTask.completed;
-          savedTask.description = task.description || savedTask.description;
           savedTask.title = task.title || savedTask.title;
+          savedTask.description = task.description || savedTask.description;
+          savedTask.completed = task.completed || savedTask.completed;
 
           return savedTask;
         }),
