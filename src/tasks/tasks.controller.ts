@@ -94,10 +94,10 @@ export class TasksController {
   }
 
   // Update
-  @Put()
+  @Put(':id')
   @HttpCode(200)
-  update(@Body() task: UpdateTaskDto): Observable<UpdateResult<TaskEntity>> {
-    return this.taskService.update(task);
+  update(@Param('id', ParseIntPipe) id: number, @Body() task: UpdateTaskDto): Observable<UpdateResult<TaskEntity>> {
+    return this.taskService.update(id, task);
   }
 
   // Delete
