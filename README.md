@@ -67,3 +67,8 @@ open http://localhost:3000/api
 ## Running the client
 
 Read the docs of Tasker client here: https://github.com/lukascivil/our-admin
+
+### Plus
+
+If you want to view the tables in the DBMS and the documents created, you can use a graphical tool to access.
+[HeidiSQL](https://www.heidisql.com/) is a free and powerful client for MariaDB, MySQL, Microsoft SQL Server, PostgreSQL and SQLite.
