@@ -44,6 +44,7 @@ describe('TaskService', () => {
   it('should create new task and return the same', () => {
     const newTask: CreateTaskDto = {
       description: 'new task was created, and i have to study more',
+      title: 'nest is supreme',
       completed: false
     };
 
