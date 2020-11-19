@@ -1,1 +1,1 @@
-export type AppEntity = 'task';
+export type AppEntity = 'task' | 'user';
