@@ -1,6 +1,6 @@
 // Packages
 import { Controller, Get } from '@nestjs/common';
-import { HealthCheck, HealthCheckService, MemoryHealthIndicator } from '@nestjs/terminus';
+import { HealthCheck, HealthCheckService, MemoryHealthIndicator, TypeOrmHealthIndicator } from '@nestjs/terminus';
 import { TasksHealth } from 'src/tasks/tasks.health';
 import { UsersHealth } from 'src/users/users.health';
 
@@ -10,7 +10,8 @@ export class HealthController {
     private health: HealthCheckService,
     private usersHealth: UsersHealth,
     private tasksHealth: TasksHealth,
-    private memoryHealthIndicator: MemoryHealthIndicator
+    private memoryHealthIndicator: MemoryHealthIndicator,
+    private db: TypeOrmHealthIndicator
   ) {}
 
   @Get()
@@ -19,7 +20,8 @@ export class HealthController {
     return this.health.check([
       () => this.usersHealth.isHealthy(),
       () => this.tasksHealth.isHealthy(),
-      () => this.memoryHealthIndicator.checkHeap('memory', 150 * 1024 * 1024)
+      () => this.memoryHealthIndicator.checkHeap('memory', 150 * 1024 * 1024),
+      () => this.db.pingCheck('database', { timeout: 100 })
     ]);
   }
 }
