@@ -64,6 +64,13 @@ $ yarn test:e2e
 open http://localhost:3000/api
 ```
 
+## Health
+
+```bash
+# Health API with Terminus
+open http://localhost:3000/health
+```
+
 ## Running the client
 
 Read the docs of Tasker client here: https://github.com/lukascivil/our-admin
