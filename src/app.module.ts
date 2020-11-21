@@ -4,13 +4,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TerminusModule } from '@nestjs/terminus';
 
 // Pipes
 import { ParseListQueryPipe } from './shared/pipes/parse-list-query.pipe';
 import { UsersModule } from './users/users.module';
+import { HealthController } from './health/health.controller';
+
+// Health
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
+    TerminusModule,
+    HealthModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',

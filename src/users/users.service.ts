@@ -28,7 +28,7 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  getOne(id: number): Observable<GetOneResult<UserEntity>> {
+  getOne(id: number): Observable<GetOneResult<UserEntity | undefined>> {
     const query: FindOneOptions<UserEntity> = { where: { id } };
 
     return from(this.userRepository.findOne(query)).pipe(
