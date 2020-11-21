@@ -57,11 +57,21 @@ $ yarn test
 $ yarn test:e2e
 ```
 
-## Documentation
+## Open API Documentation
 
 ```bash
 # Swagger Docs
 open http://localhost:3000/api
+```
+
+## Project Architecture Documentation
+
+```bash
+
+# Docs with compodoc
+$ yarn compodoc
+
+open http://localhost:8080/
 ```
 
 ## Health
