@@ -64,6 +64,8 @@ $ yarn test:e2e
 open http://localhost:3000/api
 ```
 
+![image](https://user-images.githubusercontent.com/7409802/99883901-fcf1d600-2c08-11eb-9497-7b0f87562e7d.png)
+
 ## Project Architecture Documentation
 
 ```bash
@@ -73,6 +75,8 @@ $ yarn compodoc
 
 open http://localhost:8080/
 ```
+
+![image](https://user-images.githubusercontent.com/7409802/99883854-b43a1d00-2c08-11eb-9e3d-0242c5098e2f.png)
 
 ## Health
 
