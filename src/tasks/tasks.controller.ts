@@ -14,7 +14,8 @@ import {
   UsePipes,
   ValidationPipe,
   HttpException,
-  HttpStatus
+  HttpStatus,
+  UseGuards
 } from '@nestjs/common';
 import { TaskService } from './shared/services/task.service';
 import { Observable, of } from 'rxjs';
@@ -39,8 +40,10 @@ import { UpdateTaskDto } from './shared/dto/update-task.dto';
 import { ListPaginationInterceptor } from 'src/shared/interceptors/list-pagination.interceptor';
 import { CreateResult } from 'src/shared/models/create-result.model';
 import { UpdateResult } from 'src/shared/models/update-result.model';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('tasks')
+@UseGuards(JwtAuthGuard)
 @UseInterceptors(ListPaginationInterceptor)
 export class TasksController {
   constructor(private taskService: TaskService) {}

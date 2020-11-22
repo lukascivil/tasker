@@ -13,25 +13,39 @@ import {
   UseGuards,
   Query,
   HttpStatus,
-  HttpException
+  HttpException,
+  UseInterceptors
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { Observable, of } from 'rxjs';
+import { DeleteResult } from 'typeorm';
+import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { isArray } from 'class-validator';
+
+// Entities
+import { UserEntity } from './entities/user.entity';
+
+// Dtos
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Observable, of } from 'rxjs';
-import { UserEntity } from './entities/user.entity';
+
+// Models
 import { GetOneResult } from 'src/shared/models/get-one-result.model';
 import { CreateResult } from 'src/shared/models/create-result.model';
-import { DeleteResult } from 'typeorm';
-import { UpdateResult } from 'src/shared/models/update-result.model';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { GetListQuery } from 'src/shared/models/get-list-query.model';
 import { GetListResult } from 'src/shared/models/get-list-result.model';
 import { GetManyResult } from 'src/shared/models/get-many-result.model';
-import { isArray } from 'class-validator';
+import { UpdateResult } from 'src/shared/models/update-result.model';
+
+// Guards
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+
+// Interceptors
+import { ListPaginationInterceptor } from 'src/shared/interceptors/list-pagination.interceptor';
 
 @Controller('users')
+@UseGuards(JwtAuthGuard)
+@UseInterceptors(ListPaginationInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
