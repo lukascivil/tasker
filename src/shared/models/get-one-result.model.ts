@@ -1,3 +1,3 @@
 export interface GetOneResult<T> {
-  data: T;
+  data: T | undefined;
 }

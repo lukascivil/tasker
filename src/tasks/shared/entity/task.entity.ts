@@ -1,9 +1,10 @@
 // Packages
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 // Models
 import { AppEntity } from 'src/shared/models/app-entity.model';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 const entityName: AppEntity = 'task';
 
@@ -15,6 +16,15 @@ export class TaskEntity {
     description: 'Record Id'
   })
   id?: number;
+
+  @Column({ nullable: false })
+  @OneToOne(() => UserEntity)
+  @JoinColumn()
+  user: number;
+
+  @Column({ nullable: false })
+  @OneToOne(() => UserEntity)
+  updated_by: number;
 
   @Column({ type: 'longtext', default: '' })
   @ApiProperty({

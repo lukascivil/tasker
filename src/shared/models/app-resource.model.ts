@@ -1,1 +1,1 @@
-export type AppResource = 'tasks';
+export type AppResource = 'tasks' | 'users';

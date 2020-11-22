@@ -30,7 +30,7 @@ export class UserEntity {
   })
   birthdate: string;
 
-  @Column({ type: 'text', default: '' })
+  @Column({ type: 'varchar', unique: true, length: 256, nullable: false })
   @ApiProperty({
     example: 'cafe@gmail.com',
     description: 'User email'

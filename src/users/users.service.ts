@@ -1,9 +1,9 @@
 // Packages
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { DeleteResult, FindOneOptions, Repository } from 'typeorm';
+import { DeleteResult, FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 
 // DTOs
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,6 +16,9 @@ import { GetOneResult } from 'src/shared/models/get-one-result.model';
 // Entities
 import { UserEntity } from './entities/user.entity';
 import { UpdateResult } from 'src/shared/models/update-result.model';
+import { GetListQuery } from 'src/shared/models/get-list-query.model';
+import { GetListResult } from 'src/shared/models/get-list-result.model';
+import { GetManyResult } from 'src/shared/models/get-many-result.model';
 
 @Injectable()
 export class UsersService {
@@ -24,23 +27,67 @@ export class UsersService {
     private readonly userRepository: Repository<UserEntity>
   ) {}
 
-  findAll() {
-    return `This action returns all users`;
+  getList(getListQuery: GetListQuery): Observable<GetListResult<UserEntity>> {
+    const query: FindManyOptions<UserEntity> = {
+      where: { ...getListQuery.filter },
+      take: getListQuery.range[1] - getListQuery.range[0],
+      skip: getListQuery.range[0],
+      order: { [getListQuery.sort[0]]: getListQuery.sort[1] }
+    };
+
+    return from(this.userRepository.findAndCount(query)).pipe(
+      map(el => {
+        return {
+          data: el[0].slice(getListQuery.range[0], getListQuery.range[1]),
+          contentRange: ['users', getListQuery.range[0], getListQuery.range[1], el[1]]
+        };
+      })
+    );
+  }
+
+  getMany(getListQuery: GetListQuery): Observable<GetManyResult<UserEntity>> {
+    const query: FindManyOptions<UserEntity> = { where: { id: getListQuery.filter.id } };
+
+    return from(this.userRepository.find(query)).pipe(
+      map(savedUser => {
+        return {
+          data: savedUser
+        };
+      })
+    );
+  }
+
+  getOneByEmail(email: string): Observable<GetOneResult<UserEntity | undefined>> {
+    const query: FindOneOptions<UserEntity> = { where: { email } };
+
+    return from(this.userRepository.findOne(query)).pipe(
+      map((savedUser: UserEntity | undefined) => {
+        return {
+          data: savedUser
+        };
+      })
+    );
   }
 
   getOne(id: number): Observable<GetOneResult<UserEntity | undefined>> {
     const query: FindOneOptions<UserEntity> = { where: { id } };
 
     return from(this.userRepository.findOne(query)).pipe(
-      map(savedTask => {
+      map((savedUser: UserEntity | undefined) => {
         return {
-          data: savedTask
+          data: savedUser
         };
       })
     );
   }
 
   create(createUserDto: CreateUserDto): Observable<CreateResult<UserEntity>> {
+    const user = this.getOneByEmail(createUserDto.email).toPromise();
+
+    if (user) {
+      throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
+    }
+
     const newUser = new UserEntity();
 
     newUser.name = createUserDto.name;
