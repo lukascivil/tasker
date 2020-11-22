@@ -10,6 +10,6 @@ import { UsersHealth } from './users.health';
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UsersController],
   providers: [UsersService, UsersHealth],
-  exports: [UsersHealth]
+  exports: [UsersHealth, UsersService]
 })
 export class UsersModule {}

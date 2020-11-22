@@ -8,7 +8,8 @@ import {
   Delete,
   ValidationPipe,
   ParseIntPipe,
-  UsePipes
+  UsePipes,
+  UseGuards
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,6 +20,7 @@ import { GetOneResult } from 'src/shared/models/get-one-result.model';
 import { CreateResult } from 'src/shared/models/create-result.model';
 import { DeleteResult } from 'typeorm';
 import { UpdateResult } from 'src/shared/models/update-result.model';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UsersController {
@@ -31,6 +33,7 @@ export class UsersController {
   }
 
   // Create
+  @UseGuards(AuthGuard('local'))
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
   create(@Body() task: CreateUserDto): Observable<CreateResult<UserEntity>> {

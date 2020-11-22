@@ -13,6 +13,7 @@ import { HealthController } from './health/health.controller';
 
 // Health
 import { HealthModule } from './health/health.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { HealthModule } from './health/health.module';
       synchronize: true
     }),
     TasksModule,
-    UsersModule
+    UsersModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService, ParseListQueryPipe]
