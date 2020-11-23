@@ -16,7 +16,6 @@ export class ListPaginationInterceptor implements NestInterceptor<Data, Response
   intercept(context: ExecutionContext, next: CallHandler): Observable<Response<TaskEntity>> {
     return next.handle().pipe(
       map((data: Data) => {
-        console.log(data);
         if (!data.hasOwnProperty('contentRange')) {
           return data.data as TaskEntity;
         }

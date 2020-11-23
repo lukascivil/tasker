@@ -6,8 +6,6 @@ type Order = 'DESC' | 'ASC';
 @ValidatorConstraint()
 export class SortValidator implements ValidatorConstraintInterface {
   validate(sort: [string, Order], validationArguments: ValidationArguments) {
-    console.log(sort);
-
     if (sort?.length !== 2) {
       return false;
     }

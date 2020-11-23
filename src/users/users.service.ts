@@ -1,7 +1,7 @@
 // Packages
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { DeleteResult, FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 
@@ -82,12 +82,6 @@ export class UsersService {
   }
 
   create(createUserDto: CreateUserDto): Observable<CreateResult<UserEntity>> {
-    const user = this.getOneByEmail(createUserDto.email).toPromise();
-
-    if (user) {
-      throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
-    }
-
     const newUser = new UserEntity();
 
     newUser.name = createUserDto.name;
@@ -95,11 +89,14 @@ export class UsersService {
     newUser.email = createUserDto.email;
     newUser.birthdate = createUserDto.birthdate;
 
-    return from(this.userRepository.save(newUser)).pipe(
-      map(savedUser => {
-        return {
-          data: savedUser
-        };
+    return from(this.getOneByEmail(createUserDto.email)).pipe(
+      switchMap(savedUser => {
+        return savedUser.data?.email
+          ? throwError(new HttpException('Email already exist', HttpStatus.BAD_REQUEST))
+          : from(this.userRepository.save(newUser));
+      }),
+      switchMap(savedUser => {
+        return of({ data: savedUser });
       })
     );
   }
