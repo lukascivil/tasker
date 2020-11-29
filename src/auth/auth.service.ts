@@ -4,6 +4,7 @@ import { GetOneResult } from 'src/shared/models/get-one-result.model';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -23,11 +24,15 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
+  login(user: any): { access_token: string } {
     const payload = { username: user.username, sub: user.userId };
 
     return {
       access_token: this.jwtService.sign(payload)
     };
+  }
+
+  async register(createUserDto: CreateUserDto): Promise<void> {
+    await this.usersService.create(createUserDto).toPromise();
   }
 }

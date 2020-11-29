@@ -1,5 +1,5 @@
 // Packages
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { AuthService } from './auth/auth.service';
 
 // Guards
 import { LocalAuthGuard } from './auth/local-auth.guard';
+import { CreateUserDto } from './users/dto/create-user.dto';
 
 @Controller()
 export class AppController {
@@ -23,5 +24,11 @@ export class AppController {
   @Post('auth/login')
   async login(@Request() request) {
     return this.authService.login(request);
+  }
+
+  @Post('auth/register')
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+  async register(@Body() createUserDto: CreateUserDto) {
+    return this.authService.register(createUserDto);
   }
 }
