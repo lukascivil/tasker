@@ -32,6 +32,7 @@
     "@nestjs/swagger": "^4.6.0",
     "@nestjs/terminus": "^7.0.1",
     "@nestjs/typeorm": "^7.1.4",
+    "date-fns": "^2.16.1",
     "mysql": "^2.18.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",

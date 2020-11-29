@@ -9,7 +9,10 @@ import { AuthService } from './auth/auth.service';
 
 // Guards
 import { LocalAuthGuard } from './auth/local-auth.guard';
-import { CreateUserDto } from './users/dto/create-user.dto';
+
+// Dtos
+import { RefreshTokenDto } from './auth/dto/refresh-token.dto';
+import { RegisterUserDto } from './auth/dto/register-user.dto';
 
 @Controller()
 export class AppController {
@@ -28,7 +31,13 @@ export class AppController {
 
   @Post('auth/register')
   @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
-  async register(@Body() createUserDto: CreateUserDto) {
-    return this.authService.register(createUserDto);
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    return this.authService.register(registerUserDto);
+  }
+
+  @Post('auth/refresh')
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+  async refresh(@Body() refreshTokenDto: RefreshTokenDto) {
+    return this.authService.refresh(refreshTokenDto);
   }
 }
