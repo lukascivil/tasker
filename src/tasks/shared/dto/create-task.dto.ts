@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
 
 export class CreateTaskDto {
   @ApiProperty({
@@ -8,6 +8,13 @@ export class CreateTaskDto {
   })
   @IsString()
   title: string;
+
+  @ApiProperty({
+    example: '123',
+    description: 'User id'
+  })
+  @IsNumber()
+  user_id: number;
 
   @ApiProperty({
     example: 'Working on a project',

@@ -111,6 +111,8 @@ export class UsersService {
           savedUser.name = updateUserDto.name || savedUser.name;
           savedUser.email = updateUserDto.email || savedUser.email;
           savedUser.birthdate = updateUserDto.birthdate || savedUser.birthdate;
+          savedUser.password = updateUserDto.password || savedUser.password;
+          savedUser.updated_at = new Date().toISOString();
 
           return savedUser;
         }),

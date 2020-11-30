@@ -73,6 +73,7 @@ export class TaskService {
     newTask.title = task.title;
     newTask.description = task.description;
     newTask.completed = task.completed;
+    newTask.user_id = task.user_id;
 
     return from(this.taskRepository.save(newTask)).pipe(
       map(savedTask => {
