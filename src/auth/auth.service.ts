@@ -1,13 +1,11 @@
 // Packages
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { differenceInMinutes } from 'date-fns';
 
 // Entities
 import { UserEntity } from 'src/users/entities/user.entity';
 
 // Dtos
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 // Models
