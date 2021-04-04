@@ -46,9 +46,9 @@ export class UsersService {
   }
 
   getMany(getListQuery: GetListQuery): Observable<GetManyResult<UserEntity>> {
-    const query: FindManyOptions<UserEntity> = { where: { id: getListQuery.filter.id } };
+    const ids = typeof getListQuery.filter.id === 'string' ? [getListQuery.filter.id] : getListQuery.filter.id;
 
-    return from(this.userRepository.find(query)).pipe(
+    return from(this.userRepository.findByIds(ids)).pipe(
       map(savedUser => {
         return {
           data: savedUser

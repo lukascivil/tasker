@@ -44,9 +44,9 @@ export class TaskService {
   }
 
   getMany(getListQuery: GetListQuery): Observable<GetManyResult<TaskEntity>> {
-    const query: FindManyOptions<TaskEntity> = { where: { id: getListQuery.filter.id } };
+    const ids = typeof getListQuery.filter.id === 'string' ? [getListQuery.filter.id] : getListQuery.filter.id;
 
-    return from(this.taskRepository.find(query)).pipe(
+    return from(this.taskRepository.findByIds(ids)).pipe(
       map(savedTask => {
         return {
           data: savedTask
