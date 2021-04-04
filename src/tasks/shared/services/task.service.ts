@@ -28,15 +28,15 @@ export class TaskService {
   getList(getListQuery: GetListQuery): Observable<GetListResult<TaskEntity>> {
     const query: FindManyOptions<TaskEntity> = {
       where: { ...getListQuery.filter },
-      take: getListQuery.range[1] - getListQuery.range[0],
-      skip: getListQuery.range[0],
+      take: getListQuery.range[1] - getListQuery.range[0] + 1,
+      skip: getListQuery.range[0] === 0 ? 1 : getListQuery.range[0],
       order: { [getListQuery.sort[0]]: getListQuery.sort[1] }
     };
 
     return from(this.taskRepository.findAndCount(query)).pipe(
       map(el => {
         return {
-          data: el[0].slice(getListQuery.range[0], getListQuery.range[1]),
+          data: el[0],
           contentRange: ['tasks', getListQuery.range[0], getListQuery.range[1], el[1]]
         };
       })

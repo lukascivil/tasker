@@ -30,15 +30,15 @@ export class UsersService {
   getList(getListQuery: GetListQuery): Observable<GetListResult<UserEntity>> {
     const query: FindManyOptions<UserEntity> = {
       where: { ...getListQuery.filter },
-      take: getListQuery.range[1] - getListQuery.range[0],
-      skip: getListQuery.range[0],
+      take: getListQuery.range[1] - getListQuery.range[0] + 1,
+      skip: getListQuery.range[0] === 0 ? 1 : getListQuery.range[0],
       order: { [getListQuery.sort[0]]: getListQuery.sort[1] }
     };
 
     return from(this.userRepository.findAndCount(query)).pipe(
       map(el => {
         return {
-          data: el[0].slice(getListQuery.range[0], getListQuery.range[1]),
+          data: el[0],
           contentRange: ['users', getListQuery.range[0], getListQuery.range[1], el[1]]
         };
       })
