@@ -102,16 +102,16 @@ export class UsersController {
   // @Post()
   // @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
   // async create1M(@Body() task: CreateUserDto): Promise<CreateResult<UserEntity>> {
-  //   let cafe: CreateResult<UserEntity>;
+  //   let user: CreateResult<UserEntity>;
 
   //   for (let index = 100; index < 1000000; index++) {
   //     const newTask: CreateUserDto = { ...task };
   //     newTask.email = `${index}${newTask.email}`;
 
-  //     cafe = await this.usersService.create(newTask).toPromise();
+  //     user = await this.usersService.create(newTask).toPromise();
   //   }
 
-  //   return cafe;
+  //   return user;
   // }
 
   // Update
