@@ -97,6 +97,23 @@ export class UsersController {
     return this.usersService.create(task);
   }
 
+  // Create1M
+  // @UseGuards(AuthGuard('local'))
+  // @Post()
+  // @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+  // async create1M(@Body() task: CreateUserDto): Promise<CreateResult<UserEntity>> {
+  //   let cafe: CreateResult<UserEntity>;
+
+  //   for (let index = 100; index < 1000000; index++) {
+  //     const newTask: CreateUserDto = { ...task };
+  //     newTask.email = `${index}${newTask.email}`;
+
+  //     cafe = await this.usersService.create(newTask).toPromise();
+  //   }
+
+  //   return cafe;
+  // }
+
   // Update
   @Put(':id')
   @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
