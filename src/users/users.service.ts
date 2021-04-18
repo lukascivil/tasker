@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { from, Observable, of, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { DeleteResult, FindManyOptions, FindOneOptions, Repository } from 'typeorm';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 
 // DTOs
 import { CreateUserDto } from './dto/create-user.dto';
@@ -20,6 +21,7 @@ import { GetListQuery } from 'src/shared/models/get-list-query.model';
 import { GetListResult } from 'src/shared/models/get-list-result.model';
 import { GetManyResult } from 'src/shared/models/get-many-result.model';
 
+@Resolver()
 @Injectable()
 export class UsersService {
   constructor(
@@ -27,6 +29,7 @@ export class UsersService {
     private readonly userRepository: Repository<UserEntity>
   ) {}
 
+  @Query(() => [UserEntity])
   getList(getListQuery: GetListQuery): Observable<GetListResult<UserEntity>> {
     const query: FindManyOptions<UserEntity> = {
       where: { ...getListQuery.filter },
@@ -69,7 +72,8 @@ export class UsersService {
     );
   }
 
-  getOne(id: number): Observable<GetOneResult<UserEntity | undefined>> {
+  @Query(() => UserEntity)
+  getOne(@Args('id') id: number): Observable<GetOneResult<UserEntity | undefined>> {
     const query: FindOneOptions<UserEntity> = { where: { id } };
 
     return from(this.userRepository.findOne(query)).pipe(

@@ -1,14 +1,17 @@
 // Packages
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 // Entity
 import { AppEntity } from 'src/shared/models/app-entity.model';
 
 const entityName: AppEntity = 'user';
 
+@ObjectType()
 @Entity(entityName)
 export class UserEntity {
+  @Field()
   @PrimaryGeneratedColumn()
   @ApiProperty({
     example: 10,
@@ -16,6 +19,7 @@ export class UserEntity {
   })
   id?: number;
 
+  @Field()
   @Column({ type: 'longtext', default: '' })
   @ApiProperty({
     example: 'Working on a project with react-admin and nestjs',
@@ -23,6 +27,7 @@ export class UserEntity {
   })
   name: string;
 
+  @Field()
   @Column({ type: 'datetime', default: () => 'NOW()' })
   @ApiProperty({
     example: 28,
@@ -30,6 +35,7 @@ export class UserEntity {
   })
   birthdate: string;
 
+  @Field()
   @Column({ type: 'varchar', unique: true, length: 256, nullable: false })
   @ApiProperty({
     example: 'cafe@gmail.com',
@@ -37,6 +43,7 @@ export class UserEntity {
   })
   email: string;
 
+  @Field()
   @Column({ type: 'text', default: '' })
   @ApiProperty({
     example: '123456',
@@ -44,6 +51,7 @@ export class UserEntity {
   })
   password: string;
 
+  @Field()
   @Column({ type: 'datetime', default: () => 'NOW()' })
   @ApiProperty({
     example: 'YYYY-MM-DD HH-MM-SS',
@@ -51,6 +59,7 @@ export class UserEntity {
   })
   created_at: string;
 
+  @Field()
   @Column({ type: 'datetime', default: () => 'NOW()' })
   @ApiProperty({
     example: 'YYYY-MM-DD HH-MM-SS',

@@ -5,11 +5,11 @@ import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TerminusModule } from '@nestjs/terminus';
+import { GraphQLModule } from '@nestjs/graphql';
 
 // Pipes
 import { ParseListQueryPipe } from './shared/pipes/parse-list-query.pipe';
 import { UsersModule } from './users/users.module';
-import { HealthController } from './health/health.controller';
 
 // Health
 import { HealthModule } from './health/health.module';
@@ -31,7 +31,10 @@ import { AuthModule } from './auth/auth.module';
     }),
     TasksModule,
     UsersModule,
-    AuthModule
+    AuthModule,
+    GraphQLModule.forRoot({
+      autoSchemaFile: 'schema.gql'
+    })
   ],
   controllers: [AppController],
   providers: [AppService, ParseListQueryPipe]
