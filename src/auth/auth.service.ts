@@ -51,8 +51,8 @@ export class AuthService {
 
     // Set access_token with 15 minutes and refresh_token with 30 minutes
     return {
-      access_token: this.jwtService.sign(payload, { expiresIn: 900 }),
-      refresh_token: this.jwtService.sign(payload, { expiresIn: 1800 })
+      access_token: this.jwtService.sign(payload, { expiresIn: 2700 }),
+      refresh_token: this.jwtService.sign(payload, { expiresIn: 3600 })
     };
   }
 
@@ -70,8 +70,8 @@ export class AuthService {
     }
 
     return {
-      access_token: this.jwtService.sign({}, { expiresIn: 900 }),
-      refresh_token: this.jwtService.sign({}, { expiresIn: 1800 })
+      access_token: this.jwtService.sign({}, { expiresIn: 2700 }),
+      refresh_token: this.jwtService.sign({}, { expiresIn: 3600 })
     };
   }
 }
